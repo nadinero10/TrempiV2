@@ -14,7 +14,6 @@ import { useI18n } from "@/providers/I18nProvider";
 import { useAuth } from "@/providers/AuthProvider";
 import { useTheme } from "@/providers/ThemeProvider";
 import { cn } from "@/lib/utils";
-import { APP_NAME } from "@/lib/constants";
 import { ROUTES } from "@/config/routes";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -71,8 +70,8 @@ export function Header() {
       className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md"
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to={ROUTES.HOME} className="text-xl font-bold text-primary">
-          {APP_NAME}
+        <Link to={ROUTES.HOME} className="flex items-center gap-2">
+          <img src="/trempi-logo.png" alt="Trempi" className="h-9 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -182,8 +181,8 @@ export function Header() {
           </SheetTrigger>
           <SheetContent side={isRTL ? "left" : "right"} className="w-72">
             <SheetHeader>
-              <SheetTitle className="text-start text-lg font-bold text-primary">
-                {APP_NAME}
+              <SheetTitle className="text-start">
+                <img src="/trempi-logo.png" alt="Trempi" className="h-8 w-auto" />
               </SheetTitle>
               <SheetDescription className="sr-only">
                 {t("nav.home")}

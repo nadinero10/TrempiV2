@@ -23,8 +23,13 @@
   --warning: 38 92% 50%;
   --border: 214 32% 91%;
   --input: 214 32% 91%;
-  --ring: 213 79% 18%;
-  --radius: 0.625rem;
+  --ring: 254 100% 65%;
+  --radius: 0.75rem;
+
+  --color-teal: #06B6D4;
+  --color-orange: #F97316;
+  --color-pink: #EC4899;
+  --color-lime: #84CC16;
 }
 
 .dark {
@@ -34,7 +39,7 @@
   --card-foreground: 210 40% 98%;
   --popover: 217 40% 14%;
   --popover-foreground: 210 40% 98%;
-  --primary: 213 79% 18%;
+  --primary: 220 70% 35%;
   --primary-foreground: 210 40% 98%;
   --secondary: 254 100% 65%;
   --secondary-foreground: 0 0% 100%;
@@ -88,4 +93,38 @@
     @apply bg-background text-foreground antialiased;
     font-family: "Inter", system-ui, -apple-system, sans-serif;
   }
+  [dir="rtl"] body,
+  [lang="ar"] body {
+    font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #0A2A52 0%, #6D4CFF 50%, #06B6D4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8f4f8 25%, #fdf2f8 50%, #f5f3ff 75%, #ecfdf5 100%);
+}
+
+.dark .hero-gradient {
+  background: linear-gradient(135deg, #0B1220 0%, #0f1a2e 25%, #150f24 50%, #0d1b2a 75%, #0B1220 100%);
+}
+
+.card-gradient {
+  background: linear-gradient(145deg, rgba(109, 76, 255, 0.03) 0%, rgba(6, 182, 212, 0.03) 100%);
+}
+
+.dark .card-gradient {
+  background: linear-gradient(145deg, rgba(109, 76, 255, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
 }

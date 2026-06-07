@@ -30,8 +30,8 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
-            <Link to={ROUTES.HOME} className="text-xl font-bold">
-              {APP_NAME}
+            <Link to={ROUTES.HOME} className="inline-block">
+              <img src="/trempi-logo.png" alt="Trempi" className="h-10 w-auto brightness-0 invert" />
             </Link>
             <p className="mt-2 text-sm text-primary-foreground/70">
               {t("footer.about")}
