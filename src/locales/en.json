@@ -104,41 +104,21 @@
     "goHome": "Go Home"
   },
   "auth": {
-    "login": {
-      "title": "Welcome Back",
-      "subtitle": "Sign in to your account",
-      "email": "Email",
-      "password": "Password",
-      "submit": "Sign In",
-      "forgotPassword": "Forgot password?",
-      "noAccount": "Don't have an account?",
-      "register": "Sign up"
-    },
-    "register": {
-      "title": "Create Account",
-      "subtitle": "Join the Trempi community",
+    "otp": {
+      "title": "Welcome to Trempi",
+      "subtitle": "Enter your phone number to get started",
+      "verifyTitle": "Verify Your Number",
+      "verifySubtitle": "Enter the code sent to your phone",
+      "phone": "Phone Number",
       "fullName": "Full Name",
-      "email": "Email",
-      "password": "Password",
-      "confirmPassword": "Confirm Password",
-      "submit": "Create Account",
-      "hasAccount": "Already have an account?",
-      "login": "Sign in"
-    },
-    "forgotPassword": {
-      "title": "Reset Password",
-      "subtitle": "Enter your email and we'll send you a reset link",
-      "email": "Email",
-      "submit": "Send Reset Link",
-      "backToLogin": "Back to login",
-      "success": "Check your email for the reset link"
-    },
-    "resetPassword": {
-      "title": "New Password",
-      "subtitle": "Enter your new password",
-      "password": "New Password",
-      "confirmPassword": "Confirm Password",
-      "submit": "Update Password"
+      "fullNamePlaceholder": "Your name (for first time users)",
+      "fullNameHint": "Only needed if this is your first time",
+      "code": "Verification Code",
+      "sendCode": "Send Code",
+      "verify": "Verify & Continue",
+      "changePhone": "Change number",
+      "resend": "Resend code",
+      "terms": "By continuing, you agree to Trempi's Terms of Service and Privacy Policy"
     }
   },
   "events": {

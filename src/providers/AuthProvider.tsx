@@ -1,91 +1,130 @@
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
-import type { ReactNode } from "react";
-import type { User, Session } from "@supabase/supabase-js";
-import type { Profile } from "@/types/database";
-import { supabase } from "@/lib/supabase";
+import { createContext, useContext, useEffect, useState, useCallback } from "react"
+import type { ReactNode } from "react"
+import type { User, Session } from "@supabase/supabase-js"
+import type { Profile } from "@/types/database"
+import { supabase } from "@/lib/supabase"
+import { sendOtp, verifyOtp, normalizePhone } from "@/services/otp"
 
 interface AuthContextValue {
-  user: User | null;
-  session: Session | null;
-  profile: Profile | null;
-  loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, fullName: string) => Promise<void>;
-  signOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
-  updatePassword: (password: string) => Promise<void>;
+  user: User | null
+  session: Session | null
+  profile: Profile | null
+  loading: boolean
+  sendOtpToPhone: (phone: string) => Promise<void>
+  verifyOtpAndSignIn: (phone: string, code: string, fullName?: string) => Promise<void>
+  signOut: () => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+const AuthContext = createContext<AuthContextValue | null>(null)
+
+const PHONE_PASSWORD_SALT = "trempi_otp_verified_2026"
+
+function phoneToEmail(phone: string): string {
+  const normalized = normalizePhone(phone).replace(/\+/g, "")
+  return `${normalized}@phone.trempi.app`
+}
+
+function phoneToPassword(phone: string): string {
+  const normalized = normalizePhone(phone)
+  return `${PHONE_PASSWORD_SALT}_${normalized}`
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null)
+  const [session, setSession] = useState<Session | null>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const fetchProfile = useCallback(async (userId: string) => {
     const { data } = await supabase
       .from("profiles")
       .select("*")
       .eq("id", userId)
-      .single();
-    setProfile(data);
-  }, []);
+      .single()
+    setProfile(data)
+  }, [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
+      setSession(currentSession)
+      setUser(currentSession?.user ?? null)
       if (currentSession?.user) {
-        fetchProfile(currentSession.user.id);
+        fetchProfile(currentSession.user.id)
       }
-      setLoading(false);
-    });
+      setLoading(false)
+    })
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      setSession(newSession);
-      setUser(newSession?.user ?? null);
+      setSession(newSession)
+      setUser(newSession?.user ?? null)
       if (newSession?.user) {
-        fetchProfile(newSession.user.id);
+        fetchProfile(newSession.user.id)
       } else {
-        setProfile(null);
+        setProfile(null)
       }
-    });
+    })
 
-    return () => subscription.unsubscribe();
-  }, [fetchProfile]);
+    return () => subscription.unsubscribe()
+  }, [fetchProfile])
 
-  const signIn = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-  }, []);
+  const sendOtpToPhone = useCallback(async (phone: string) => {
+    const result = await sendOtp(phone)
+    if (!result.success) {
+      throw new Error(result.error || "Failed to send OTP")
+    }
+  }, [])
 
-  const signUp = useCallback(async (email: string, password: string, fullName: string) => {
-    const { error } = await supabase.auth.signUp({
+  const verifyOtpAndSignIn = useCallback(async (phone: string, code: string, fullName?: string) => {
+    const result = await verifyOtp(phone, code)
+    if (!result.success) {
+      throw new Error(result.error || "Invalid OTP code")
+    }
+
+    const email = phoneToEmail(phone)
+    const password = phoneToPassword(phone)
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
-      options: { data: { full_name: fullName } },
-    });
-    if (error) throw error;
-  }, []);
+    })
+
+    if (signInError) {
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName || "",
+            phone: normalizePhone(phone),
+          },
+        },
+      })
+
+      if (signUpError) throw signUpError
+
+      const { error: signInRetry } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      if (signInRetry) throw signInRetry
+    }
+
+    const { data: { user: currentUser } } = await supabase.auth.getUser()
+    if (currentUser) {
+      await supabase.from("profiles").upsert({
+        id: currentUser.id,
+        phone: normalizePhone(phone),
+        full_name: fullName || profile?.full_name || "",
+      }, { onConflict: "id" })
+    }
+  }, [profile])
 
   const signOut = useCallback(async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-  }, []);
-
-  const resetPassword = useCallback(async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) throw error;
-  }, []);
-
-  const updatePassword = useCallback(async (password: string) => {
-    const { error } = await supabase.auth.updateUser({ password });
-    if (error) throw error;
-  }, []);
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
+  }, [])
 
   return (
     <AuthContext value={{
@@ -93,21 +132,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session,
       profile,
       loading,
-      signIn,
-      signUp,
+      sendOtpToPhone,
+      verifyOtpAndSignIn,
       signOut,
-      resetPassword,
-      updatePassword,
     }}>
       {children}
     </AuthContext>
-  );
+  )
 }
 
 export function useAuth(): AuthContextValue {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuth must be used within an AuthProvider")
   }
-  return context;
+  return context
 }
