@@ -81,7 +81,10 @@
       }
     },
     "testimonials": {
-      "title": "What People Say"
+      "title": "What People Say",
+      "testimonial1": "Trempi made our community event so much easier to organize. Everyone found rides instantly!",
+      "testimonial2": "I saved so much on transportation costs. Great way to meet people heading to the same events.",
+      "testimonial3": "The ride matching is seamless. I use Trempi for every conference and meetup now."
     }
   },
   "footer": {
@@ -152,7 +155,21 @@
       "public": "Public",
       "private": "Private",
       "submit": "Create Event",
-      "success": "Event created successfully!"
+      "success": "Event created successfully!",
+      "successDesc": "Share the event link or code with your community",
+      "goToEvent": "Go to Event"
+    },
+    "form": {
+      "name": "Event Name",
+      "description": "Description",
+      "date": "Date",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "location": "Location",
+      "visibility": "Visibility",
+      "public": "Public",
+      "private": "Private",
+      "imageUrl": "Image URL"
     },
     "detail": {
       "rideOffers": "Ride Offers",
@@ -176,6 +193,7 @@
     },
     "offer": {
       "title": "Offer Transportation",
+      "description": "Choose your transportation type and fill in the details",
       "type": "Transportation Type",
       "fromCity": "From City",
       "pickupPoint": "Pickup Point",
@@ -202,8 +220,34 @@
       "stopCity": "City",
       "stopTime": "Arrival Time"
     },
+    "form": {
+      "fromCity": "From City",
+      "pickupPoint": "Pickup Point",
+      "pickupArea": "Pickup Area",
+      "destination": "Destination",
+      "frequency": "Frequency",
+      "busCompany": "Bus Company",
+      "departureTime": "Departure Time",
+      "returnTime": "Return Time",
+      "availableSeats": "Available Seats",
+      "totalSeats": "Total Seats",
+      "price": "Price per Passenger",
+      "driverName": "Driver Name",
+      "phone": "Phone Number",
+      "whatsapp": "WhatsApp",
+      "notes": "Notes",
+      "stops": "Bus Stops",
+      "addStop": "Add Stop",
+      "stopName": "Stop Name",
+      "stopCity": "City",
+      "stopTime": "Arrival Time",
+      "preferredTime": "Preferred Time",
+      "passengers": "Number of Passengers",
+      "contact": "Contact Info"
+    },
     "request": {
       "title": "Request Transportation",
+      "description": "Tell us where you need a ride from and we'll match you",
       "fromCity": "From City",
       "pickupPoint": "Pickup Point",
       "preferredTime": "Preferred Time",
@@ -211,8 +255,13 @@
       "contact": "Contact",
       "notes": "Notes",
       "submit": "Request Transportation",
-      "success": "Request submitted successfully!"
+      "success": "Request submitted successfully!",
+      "submitted": "Your request has been submitted!",
+      "matches": "Available rides from your area",
+      "noMatches": "No matching rides found yet. We'll notify you when one becomes available."
     },
+    "seatsLeft": "seats left",
+    "contactDriver": "Contact Driver",
     "status": {
       "active": "Active",
       "full": "Full",
@@ -272,12 +321,16 @@
   },
   "share": {
     "title": "Share Event",
+    "copy": "Copy",
     "copyLink": "Copy Link",
     "whatsapp": "WhatsApp",
     "telegram": "Telegram",
     "facebook": "Facebook",
     "qrCode": "QR Code",
     "copied": "Link copied to clipboard!"
+  },
+  "validation": {
+    "required": "This field is required"
   },
   "common": {
     "loading": "Loading...",
@@ -295,6 +348,7 @@
     "filter": "Filter",
     "noResults": "No results found",
     "seeMore": "See More",
-    "seeLess": "See Less"
+    "seeLess": "See Less",
+    "remove": "Remove"
   }
 }
