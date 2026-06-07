@@ -1,0 +1,300 @@
+{
+  "nav": {
+    "home": "Home",
+    "events": "Events",
+    "search": "Search",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile",
+    "createEvent": "Create Event",
+    "language": "Language"
+  },
+  "home": {
+    "hero": {
+      "title": "Smart Transportation for Better Events",
+      "subtitle": "Your event. Your community. One ride at a time.",
+      "createEvent": "Create Event",
+      "joinEvent": "Join Event"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "step1": {
+        "title": "Create or Join",
+        "description": "Create a new event or join an existing one with a simple code"
+      },
+      "step2": {
+        "title": "Offer or Request",
+        "description": "Offer a ride or request transportation to the event"
+      },
+      "step3": {
+        "title": "Travel Together",
+        "description": "Connect with others and travel together safely"
+      }
+    },
+    "whyTrempi": {
+      "title": "Why Trempi?",
+      "saveMoney": {
+        "title": "Save Money",
+        "description": "Split costs and reduce transportation expenses"
+      },
+      "meetPeople": {
+        "title": "Meet People",
+        "description": "Connect with your community on the way"
+      },
+      "reduceTraffic": {
+        "title": "Reduce Traffic",
+        "description": "Less cars, less congestion, better environment"
+      },
+      "betterExperience": {
+        "title": "Better Experience",
+        "description": "Arrive together, enjoy together"
+      }
+    },
+    "upcomingEvents": {
+      "title": "Upcoming Events",
+      "viewAll": "View All",
+      "noEvents": "No upcoming events yet"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": {
+        "question": "What is Trempi?",
+        "answer": "Trempi is a smart transportation platform that helps communities organize rides to events. Whether it's a conference, festival, or community gathering, Trempi makes it easy to coordinate transportation."
+      },
+      "q2": {
+        "question": "How do I create an event?",
+        "answer": "Click 'Create Event', fill in the details, and share the event link or code with your community. It's that simple!"
+      },
+      "q3": {
+        "question": "Is Trempi free?",
+        "answer": "Trempi is free for basic use. Create events, offer rides, and request transportation at no cost."
+      },
+      "q4": {
+        "question": "How does ride matching work?",
+        "answer": "When you request a ride, Trempi automatically suggests available transportation options from your area to the event."
+      },
+      "q5": {
+        "question": "Is it safe?",
+        "answer": "Safety is our priority. All users are verified, and you can see driver details before joining a ride."
+      }
+    },
+    "testimonials": {
+      "title": "What People Say"
+    }
+  },
+  "footer": {
+    "about": "Smart transportation for better events",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "rights": "All rights reserved",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "notFound": {
+    "message": "Page not found",
+    "goHome": "Go Home"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "register": "Sign up"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join the Trempi community",
+      "fullName": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Create Account",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in"
+    },
+    "forgotPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your email and we'll send you a reset link",
+      "email": "Email",
+      "submit": "Send Reset Link",
+      "backToLogin": "Back to login",
+      "success": "Check your email for the reset link"
+    },
+    "resetPassword": {
+      "title": "New Password",
+      "subtitle": "Enter your new password",
+      "password": "New Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Update Password"
+    }
+  },
+  "events": {
+    "create": {
+      "title": "Create Event",
+      "name": "Event Name",
+      "description": "Description",
+      "date": "Date",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "location": "Location",
+      "image": "Event Image",
+      "visibility": "Visibility",
+      "public": "Public",
+      "private": "Private",
+      "submit": "Create Event",
+      "success": "Event created successfully!"
+    },
+    "detail": {
+      "rideOffers": "Ride Offers",
+      "rideRequests": "Ride Requests",
+      "availableSeats": "Available Seats",
+      "participants": "Participants",
+      "offerTransport": "Offer Transportation",
+      "requestTransport": "Request Transportation",
+      "share": "Share Event",
+      "copyLink": "Copy Link",
+      "copied": "Copied!"
+    }
+  },
+  "transport": {
+    "type": {
+      "private_car": "Private Car",
+      "shared_taxi": "Shared Taxi",
+      "bus": "Organized Bus",
+      "shuttle": "Shuttle",
+      "other": "Other"
+    },
+    "offer": {
+      "title": "Offer Transportation",
+      "type": "Transportation Type",
+      "fromCity": "From City",
+      "pickupPoint": "Pickup Point",
+      "date": "Date",
+      "time": "Time",
+      "seats": "Available Seats",
+      "driverName": "Driver Name",
+      "phone": "Phone Number",
+      "whatsapp": "WhatsApp",
+      "notes": "Notes",
+      "price": "Price per Passenger",
+      "busCompany": "Bus Company",
+      "departureTime": "Departure Time",
+      "returnTime": "Return Time",
+      "totalSeats": "Total Seats",
+      "contactPerson": "Contact Person",
+      "pickupArea": "Pickup Area",
+      "destination": "Destination",
+      "frequency": "Frequency",
+      "submit": "Offer Transportation",
+      "success": "Transportation offered successfully!",
+      "addStop": "Add Stop",
+      "stopName": "Stop Name",
+      "stopCity": "City",
+      "stopTime": "Arrival Time"
+    },
+    "request": {
+      "title": "Request Transportation",
+      "fromCity": "From City",
+      "pickupPoint": "Pickup Point",
+      "preferredTime": "Preferred Time",
+      "passengers": "Number of Passengers",
+      "contact": "Contact",
+      "notes": "Notes",
+      "submit": "Request Transportation",
+      "success": "Request submitted successfully!"
+    },
+    "status": {
+      "active": "Active",
+      "full": "Full",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "card": {
+      "seats": "{{available}} of {{total}} seats available",
+      "contact": "Contact",
+      "whatsapp": "WhatsApp",
+      "stops": "Stops"
+    }
+  },
+  "search": {
+    "title": "Search Events",
+    "placeholder": "Search by name, city, or location...",
+    "filters": "Filters",
+    "publicOnly": "Public events only",
+    "hasTransport": "Has available transportation",
+    "date": "Date",
+    "noResults": "No events found"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "myEvents": "My Events",
+    "myRides": "My Rides",
+    "myRequests": "My Requests",
+    "savedEvents": "Saved Events",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "noEvents": "You haven't created any events yet",
+    "noRides": "You haven't offered any rides yet",
+    "noRequests": "You haven't made any requests yet",
+    "organizer": {
+      "title": "Event Management",
+      "totalRides": "Total Rides",
+      "totalRequests": "Total Requests",
+      "totalSeats": "Total Seats",
+      "participants": "Participants",
+      "export": "Export Data"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "avatar": "Profile Picture",
+    "language": "Language",
+    "save": "Save Changes",
+    "saved": "Profile updated successfully!"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markRead": "Mark as read",
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications"
+  },
+  "share": {
+    "title": "Share Event",
+    "copyLink": "Copy Link",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "facebook": "Facebook",
+    "qrCode": "QR Code",
+    "copied": "Link copied to clipboard!"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "noResults": "No results found",
+    "seeMore": "See More",
+    "seeLess": "See Less"
+  }
+}
