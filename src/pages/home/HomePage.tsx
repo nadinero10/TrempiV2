@@ -8,11 +8,11 @@ import CTASection from "./CTASection"
 
 export default function HomePage() {
   return (
-    <main className="overflow-hidden">
+    <main>
       <HeroSection />
+      <UpcomingEventsSection />
       <HowItWorksSection />
       <WhyTrempiSection />
-      <UpcomingEventsSection />
       <TestimonialsSection />
       <CTASection />
       <FAQSection />

@@ -101,62 +101,19 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #0A2A52 0%, #6D4CFF 50%, #06B6D4 100%);
+  background: linear-gradient(135deg, #6D4CFF 0%, #0A2A52 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .dark .gradient-text {
-  background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #22D3EE 100%);
+  background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.hero-gradient {
-  background: linear-gradient(135deg, #f0f4ff 0%, #e8f4f8 25%, #fdf2f8 50%, #f5f3ff 75%, #ecfdf5 100%);
-}
-
-.dark .hero-gradient {
-  background: linear-gradient(135deg, #0B1220 0%, #0f1a2e 25%, #150f24 50%, #0d1b2a 75%, #0B1220 100%);
-}
-
-.card-gradient {
-  background: linear-gradient(145deg, rgba(109, 76, 255, 0.03) 0%, rgba(6, 182, 212, 0.03) 100%);
-}
-
-.dark .card-gradient {
-  background: linear-gradient(145deg, rgba(109, 76, 255, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
-}
-
 html {
   scroll-behavior: smooth;
-}
-
-.perspective-\[800px\] {
-  perspective: 800px;
-}
-
-.perspective-\[1200px\] {
-  perspective: 1200px;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.animate-shimmer {
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
 }

@@ -1,84 +1,89 @@
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { CalendarPlus, Car, Users, Zap } from "lucide-react"
+import { motion } from "framer-motion"
+import { Search, MapPin, Car, Shield, CalendarPlus, Users } from "lucide-react"
 import { useI18n } from "@/providers/I18nProvider"
 
-const steps = [
-  { key: "step1", icon: CalendarPlus, gradient: "from-violet-500 to-purple-600" },
-  { key: "step2", icon: Car, gradient: "from-cyan-500 to-blue-600" },
-  { key: "step3", icon: Users, gradient: "from-amber-500 to-orange-600" },
+const features = [
+  { key: "step1", icon: MapPin, emoji: "📍", color: "text-orange-500", bg: "bg-orange-50 dark:bg-orange-950/30" },
+  { key: "step2", icon: Car, emoji: "🚗", color: "text-green-500", bg: "bg-green-50 dark:bg-green-950/30" },
+  { key: "step3", icon: Users, emoji: "👥", color: "text-blue-500", bg: "bg-blue-50 dark:bg-blue-950/30" },
+] as const
+
+const extraFeatures = [
+  { icon: Shield, emoji: "🔒", title: "privacy", color: "text-purple-500", bg: "bg-purple-50 dark:bg-purple-950/30" },
+  { icon: CalendarPlus, emoji: "📱", title: "noApp", color: "text-pink-500", bg: "bg-pink-50 dark:bg-pink-950/30" },
+  { icon: Search, emoji: "⚡", title: "smart", color: "text-cyan-500", bg: "bg-cyan-50 dark:bg-cyan-950/30" },
 ] as const
 
 export default function HowItWorksSection() {
   const { t } = useI18n()
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  })
-  const lineWidth = useTransform(scrollYProgress, [0.1, 0.5], ["0%", "100%"])
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32">
+    <section className="relative py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="text-center"
         >
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-secondary/5 px-4 py-1.5 text-sm font-medium text-secondary">
-            <Zap className="h-3.5 w-3.5" />
-            {t("home.howItWorks.title")}
+            ⚡ {t("home.howItWorks.title")}
           </div>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
             {t("home.howItWorks.title")}
           </h2>
+          <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+            {t("home.hero.subtitle")}
+          </p>
         </motion.div>
 
-        <div className="relative mt-20">
-          <div className="absolute top-[3.5rem] hidden h-0.5 w-full bg-border/50 md:block" aria-hidden="true" />
-          <motion.div
-            style={{ width: lineWidth }}
-            className="absolute top-[3.5rem] hidden h-0.5 bg-gradient-to-r from-violet-500 via-cyan-500 to-amber-500 md:block"
-            aria-hidden="true"
-          />
+        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((item, i) => (
+            <motion.div
+              key={item.key}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="group"
+            >
+              <div className="h-full rounded-2xl border bg-card p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-secondary/20">
+                <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${item.bg}`}>
+                  <span className="text-2xl">{item.emoji}</span>
+                </div>
+                <h3 className="text-base font-semibold">
+                  {t(`home.howItWorks.${item.key}.title`)}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {t(`home.howItWorks.${item.key}.description`)}
+                </p>
+              </div>
+            </motion.div>
+          ))}
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {steps.map((step, i) => {
-              const Icon = step.icon
-              return (
-                <motion.div
-                  key={step.key}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.5, delay: i * 0.2 }}
-                  className="group relative text-center"
-                >
-                  <div className="relative z-10 mx-auto mb-8 flex h-[4.5rem] w-[4.5rem] items-center justify-center">
-                    <div className={`flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br ${step.gradient} text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:shadow-xl`}>
-                      <Icon className="h-8 w-8" />
-                    </div>
-                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${step.gradient} opacity-20 blur-xl transition-opacity group-hover:opacity-40`} />
-                  </div>
-
-                  <div className="rounded-2xl border bg-card p-6 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1">
-                    <div className="mb-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-muted text-xs font-bold">
-                      {i + 1}
-                    </div>
-                    <h3 className="text-lg font-semibold">
-                      {t(`home.howItWorks.${step.key}.title`)}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                      {t(`home.howItWorks.${step.key}.description`)}
-                    </p>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
+          {extraFeatures.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.4, delay: (i + 3) * 0.1 }}
+              className="group"
+            >
+              <div className="h-full rounded-2xl border bg-card p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-secondary/20">
+                <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${item.bg}`}>
+                  <span className="text-2xl">{item.emoji}</span>
+                </div>
+                <h3 className="text-base font-semibold">
+                  {t(`home.whyTrempi.${item.title === "privacy" ? "betterExperience" : item.title === "noApp" ? "saveMoney" : "meetPeople"}.title`)}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {t(`home.whyTrempi.${item.title === "privacy" ? "betterExperience" : item.title === "noApp" ? "saveMoney" : "meetPeople"}.description`)}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

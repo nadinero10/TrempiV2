@@ -1,10 +1,84 @@
 import { Link } from "react-router-dom"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
-import { ArrowRight, Search } from "lucide-react"
+import { ArrowRight, Search, Star } from "lucide-react"
 import { useI18n } from "@/providers/I18nProvider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+
+function FloatingMockup() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.3 }}
+      className="relative"
+    >
+      <div className="absolute -inset-10 rounded-full bg-gradient-to-br from-secondary/10 via-transparent to-primary/5 blur-3xl" />
+
+      <div className="relative space-y-4">
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          className="rounded-2xl border bg-card p-4 shadow-xl shadow-secondary/5"
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="flex h-2 w-2 rounded-full bg-green-500" />
+            <span className="text-xs font-medium text-muted-foreground">Ride Confirmed</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center text-xs font-bold">DA</div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">David A.</p>
+              <p className="text-xs text-muted-foreground">Haifa → Tel Aviv Conference</p>
+            </div>
+            <div className="flex items-center gap-0.5">
+              <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+              <span className="text-xs font-medium">4.9</span>
+            </div>
+          </div>
+          <div className="mt-3 flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
+            <span className="text-xs text-muted-foreground">3 seats available</span>
+            <span className="text-xs font-medium text-secondary">Join ride →</span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          className="ms-8 rounded-2xl border bg-card p-4 shadow-lg shadow-primary/5"
+        >
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 flex items-center justify-center">
+              <span className="text-lg">🚌</span>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Bus - Nazareth Route</p>
+              <p className="text-xs text-muted-foreground">12 stops • 40 seats</p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="me-4 rounded-2xl border bg-card p-4 shadow-lg shadow-secondary/5"
+        >
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-900/30 dark:to-purple-900/30 flex items-center justify-center">
+              <span className="text-lg">🎉</span>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Tech Meetup 2026</p>
+              <p className="text-xs text-muted-foreground">15 rides • 48 passengers</p>
+            </div>
+            <div className="rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-[10px] font-medium text-green-700 dark:text-green-400">Live</div>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+}
 
 export default function HeroSection() {
   const { t } = useI18n()
@@ -13,34 +87,31 @@ export default function HeroSection() {
     target: ref,
     offset: ["start start", "end start"],
   })
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95])
-  const mockupY = useTransform(scrollYProgress, [0, 1], [0, -80])
-  const mockupRotate = useTransform(scrollYProgress, [0, 1], [0, -3])
+  const y = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
 
   return (
-    <section ref={ref} className="relative min-h-[90vh] overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#f5f0ff] via-background to-background dark:from-[#1a0f2e] dark:via-background" />
-
-      <div className="absolute top-20 start-10 h-72 w-72 rounded-full bg-secondary/10 blur-3xl" />
-      <div className="absolute bottom-20 end-10 h-96 w-96 rounded-full bg-[var(--color-teal)]/8 blur-3xl" />
-      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-primary/5 blur-3xl" />
+    <section ref={ref} className="relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-bl from-secondary/[0.04] via-background to-background" />
+      <div className="absolute top-0 end-0 w-1/2 h-full bg-gradient-to-l from-secondary/[0.03] to-transparent" />
 
       <motion.div
-        style={{ y, opacity, scale }}
-        className="relative mx-auto max-w-7xl px-4 pt-20 pb-16 md:pt-32 md:pb-24"
+        style={{ y, opacity }}
+        className="relative mx-auto max-w-7xl px-4 py-16 md:py-24 lg:py-28"
       >
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="text-center lg:text-start">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
+          <div className="order-2 lg:order-1">
+            <FloatingMockup />
+          </div>
+
+          <div className="order-1 lg:order-2 text-center lg:text-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-secondary/5 px-4 py-2 text-sm font-medium text-secondary backdrop-blur-sm"
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-secondary/5 px-4 py-1.5 text-sm font-medium text-secondary"
             >
-              <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse" />
+              <Star className="h-3.5 w-3.5 fill-secondary" />
               {t("nav.createEvent")}
             </motion.div>
 
@@ -48,7 +119,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl font-extrabold leading-[1.15] tracking-tight md:text-5xl lg:text-[3.5rem]"
+              className="text-4xl font-extrabold leading-[1.2] tracking-tight md:text-5xl lg:text-[3.25rem]"
             >
               <span className="gradient-text">{t("home.hero.title")}</span>
             </motion.h1>
@@ -57,7 +128,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-6 text-lg text-muted-foreground md:text-xl leading-relaxed"
+              className="mt-5 text-base text-muted-foreground md:text-lg leading-relaxed"
             >
               {t("home.hero.subtitle")}
             </motion.p>
@@ -66,28 +137,25 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
               <Button
                 size="lg"
                 asChild
-                className="group bg-secondary hover:bg-secondary/90 text-white shadow-lg shadow-secondary/25 transition-all hover:shadow-xl hover:shadow-secondary/30 rounded-xl h-12 px-6"
+                className="group bg-secondary hover:bg-secondary/90 text-white rounded-xl h-12 px-6 shadow-md shadow-secondary/20"
               >
                 <Link to="/events/create">
                   {t("home.hero.createEvent")}
-                  <ArrowRight className="ms-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="ms-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
                 </Link>
               </Button>
 
-              <div className="relative flex-1 max-w-sm">
-                <Search className="absolute start-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <div className="relative flex-1 max-w-xs">
+                <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder={t("search.placeholder")}
-                  className="h-12 rounded-xl ps-11 border-2 bg-background/80 backdrop-blur-sm"
-                  onFocus={(e) => {
-                    e.target.blur()
-                    window.location.href = "/search"
-                  }}
+                  className="h-12 rounded-xl ps-10 border-2 border-border/60 bg-card"
+                  onFocus={(e) => { e.target.blur(); window.location.href = "/search" }}
                   readOnly
                 />
               </div>
@@ -96,40 +164,17 @@ export default function HeroSection() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="mt-10 flex items-center justify-center gap-6 lg:justify-start"
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-6"
             >
-              <div className="flex -space-x-2 rtl:space-x-reverse">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-9 w-9 rounded-full border-2 border-background bg-gradient-to-br from-primary/20 to-secondary/20" />
-                ))}
-              </div>
-              <p className="text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">2,000+</span> {t("events.detail.participants")}
-              </p>
+              <Button variant="ghost" size="sm" asChild className="text-secondary hover:text-secondary/80 hover:bg-secondary/5 rounded-lg">
+                <Link to="/search">
+                  <Star className="me-1.5 h-3.5 w-3.5" />
+                  {t("home.hero.joinEvent")}
+                </Link>
+              </Button>
             </motion.div>
           </div>
-
-          <motion.div
-            style={{ y: mockupY, rotateZ: mockupRotate }}
-            initial={{ opacity: 0, y: 60, rotateY: -10 }}
-            animate={{ opacity: 1, y: 0, rotateY: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative flex items-center justify-center perspective-[1200px]"
-          >
-            <div className="relative">
-              <div className="absolute -inset-8 rounded-3xl bg-gradient-to-tr from-secondary/20 via-transparent to-primary/10 blur-2xl" />
-              <div className="relative rounded-3xl bg-gradient-to-br from-white/50 to-white/30 dark:from-white/10 dark:to-white/5 p-3 shadow-2xl shadow-secondary/10 backdrop-blur-xl border border-white/20">
-                <img
-                  src="/hero-mockup.png"
-                  alt="Trempi App"
-                  className="w-full max-w-md rounded-2xl"
-                />
-              </div>
-              <div className="absolute -bottom-4 -end-4 h-24 w-24 rounded-2xl bg-gradient-to-br from-secondary to-primary opacity-20 blur-xl" />
-              <div className="absolute -top-4 -start-4 h-20 w-20 rounded-2xl bg-gradient-to-br from-[var(--color-teal)] to-secondary opacity-15 blur-xl" />
-            </div>
-          </motion.div>
         </div>
       </motion.div>
     </section>
