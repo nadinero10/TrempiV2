@@ -21,7 +21,7 @@ const PHONE_PASSWORD_SALT = "trempi_otp_verified_2026"
 
 function phoneToEmail(phone: string): string {
   const normalized = normalizePhone(phone).replace(/\+/g, "")
-  return `${normalized}@phone.trempi.app`
+  return `p${normalized}@trempi.app`
 }
 
 function phoneToPassword(phone: string): string {
