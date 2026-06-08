@@ -58,11 +58,8 @@ export async function sendOtp(phone: string): Promise<{ success: boolean; error?
   const normalizedPhone = normalizePhone(phone)
   const code = generateCode()
 
-  if (DEV_MODE) {
-    console.log(`[DEV] OTP for ${normalizedPhone}: ${code} (or use 1234)`)
-    storeOtp(phone, code)
-    return { success: true }
-  }
+  console.log(`[OTP] Code for ${normalizedPhone}: ${code}`)
+  storeOtp(phone, code)
 
   const smsPayload = JSON.stringify({
     UserName: INFORU_USERNAME,
@@ -75,23 +72,31 @@ export async function sendOtp(phone: string): Promise<{ success: boolean; error?
   try {
     const response = await fetch(`${SMS_API_URL}?json=${encodeURIComponent(smsPayload)}`)
     const data: SmsResponse = await response.json()
+    console.log("[OTP] InforU SMS response:", data)
 
     if (data.StatusId === 1 || data.StatusId === 0) {
-      storeOtp(phone, code)
+      return { success: true }
+    }
+
+    // SMS failed but code is already stored - still allow login in dev
+    if (DEV_MODE) {
+      console.warn(`[OTP] SMS failed but code ${code} still works locally`)
       return { success: true }
     }
 
     return { success: false, error: data.StatusDescription || data.Message || "Failed to send SMS" }
-  } catch {
+  } catch (err) {
+    console.error("[OTP] SMS error:", err)
+    // In dev, still allow proceeding even if SMS fails
+    if (DEV_MODE) {
+      console.warn(`[OTP] SMS call failed but code ${code} still works locally`)
+      return { success: true }
+    }
     return { success: false, error: "Failed to connect to SMS service" }
   }
 }
 
 export async function verifyOtp(phone: string, code: string): Promise<{ success: boolean; error?: string }> {
-  if (DEV_MODE && code === "1234") {
-    return { success: true }
-  }
-
   const stored = getStoredOtp()
 
   if (!stored) {
