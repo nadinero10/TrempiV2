@@ -2,10 +2,9 @@ const INFORU_TOKEN = import.meta.env.VITE_INFORU_TOKEN as string
 const INFORU_USERNAME = import.meta.env.VITE_INFORU_USERNAME as string
 const DEV_MODE = import.meta.env.DEV
 
-const SEND_OTP_URL = "/api/otp/SendOtp"
-const VERIFY_OTP_URL = "/api/otp/Authenticate"
+const SMS_API_URL = "/api/sms/SendSms"
 
-interface OtpResponse {
+interface SmsResponse {
   StatusId: number
   StatusDescription?: string
   Message?: string
@@ -23,70 +22,92 @@ function normalizePhone(phone: string): string {
   return cleaned
 }
 
+function generateCode(): string {
+  return Math.floor(1000 + Math.random() * 9000).toString()
+}
+
+const OTP_STORAGE_KEY = "trempi_otp_pending"
+
+interface StoredOtp {
+  phone: string
+  code: string
+  expiresAt: number
+}
+
+function storeOtp(phone: string, code: string) {
+  const data: StoredOtp = {
+    phone: normalizePhone(phone),
+    code,
+    expiresAt: Date.now() + 5 * 60 * 1000,
+  }
+  sessionStorage.setItem(OTP_STORAGE_KEY, JSON.stringify(data))
+}
+
+function getStoredOtp(): StoredOtp | null {
+  const raw = sessionStorage.getItem(OTP_STORAGE_KEY)
+  if (!raw) return null
+  const data: StoredOtp = JSON.parse(raw)
+  if (Date.now() > data.expiresAt) {
+    sessionStorage.removeItem(OTP_STORAGE_KEY)
+    return null
+  }
+  return data
+}
+
 export async function sendOtp(phone: string): Promise<{ success: boolean; error?: string }> {
   const normalizedPhone = normalizePhone(phone)
+  const code = generateCode()
 
   if (DEV_MODE) {
-    console.log(`[DEV] OTP sent to ${normalizedPhone} — use code: 1234`)
+    console.log(`[DEV] OTP for ${normalizedPhone}: ${code} (or use 1234)`)
+    storeOtp(phone, code)
     return { success: true }
   }
 
-  const payload = JSON.stringify({
+  const smsPayload = JSON.stringify({
     UserName: INFORU_USERNAME,
     Token: INFORU_TOKEN,
-    PhoneNumber: normalizedPhone,
-    CodeLength: 4,
-    SenderName: "Trempi",
+    Message: `Your Trempi verification code is: ${code}`,
+    Recipients: [{ Phone: normalizedPhone }],
+    Settings: { SenderName: "Trempi" },
   })
 
   try {
-    const response = await fetch(`${SEND_OTP_URL}?json=${encodeURIComponent(payload)}`)
-    const data: OtpResponse = await response.json()
+    const response = await fetch(`${SMS_API_URL}?json=${encodeURIComponent(smsPayload)}`)
+    const data: SmsResponse = await response.json()
 
     if (data.StatusId === 1 || data.StatusId === 0) {
+      storeOtp(phone, code)
       return { success: true }
     }
 
-    if (data.StatusId === -403) {
-      return { success: false, error: "OTP service not yet enabled. Contact InforU support." }
-    }
-
-    return { success: false, error: data.StatusDescription || data.Message || "Failed to send OTP" }
+    return { success: false, error: data.StatusDescription || data.Message || "Failed to send SMS" }
   } catch {
-    return { success: false, error: "Failed to connect to OTP service" }
+    return { success: false, error: "Failed to connect to SMS service" }
   }
 }
 
 export async function verifyOtp(phone: string, code: string): Promise<{ success: boolean; error?: string }> {
-  const normalizedPhone = normalizePhone(phone)
-
-  if (DEV_MODE) {
-    if (code === "1234") {
-      console.log(`[DEV] OTP verified for ${normalizedPhone}`)
-      return { success: true }
-    }
-    return { success: false, error: "Invalid code. Use 1234 in dev mode." }
+  if (DEV_MODE && code === "1234") {
+    return { success: true }
   }
 
-  const payload = JSON.stringify({
-    UserName: INFORU_USERNAME,
-    Token: INFORU_TOKEN,
-    PhoneNumber: normalizedPhone,
-    Code: code,
-  })
+  const stored = getStoredOtp()
 
-  try {
-    const response = await fetch(`${VERIFY_OTP_URL}?json=${encodeURIComponent(payload)}`)
-    const data: OtpResponse = await response.json()
-
-    if (data.StatusId === 1 || data.StatusId === 0) {
-      return { success: true }
-    }
-
-    return { success: false, error: data.StatusDescription || data.Message || "Invalid OTP code" }
-  } catch {
-    return { success: false, error: "Failed to verify OTP" }
+  if (!stored) {
+    return { success: false, error: "Code expired. Please request a new one." }
   }
+
+  if (stored.phone !== normalizePhone(phone)) {
+    return { success: false, error: "Phone number mismatch." }
+  }
+
+  if (stored.code === code) {
+    sessionStorage.removeItem(OTP_STORAGE_KEY)
+    return { success: true }
+  }
+
+  return { success: false, error: "Invalid code. Please try again." }
 }
 
 export { normalizePhone }
