@@ -61,16 +61,20 @@ export async function sendOtp(phone: string): Promise<{ success: boolean; error?
   console.log(`[OTP] Code for ${normalizedPhone}: ${code}`)
   storeOtp(phone, code)
 
-  const smsPayload = JSON.stringify({
+  const smsPayload = {
     UserName: INFORU_USERNAME,
     Token: INFORU_TOKEN,
     Message: `Your Trempi verification code is: ${code}`,
     Recipients: [{ Phone: normalizedPhone }],
     Settings: { SenderName: "Trempi" },
-  })
+  }
 
   try {
-    const response = await fetch(`${SMS_API_URL}?json=${encodeURIComponent(smsPayload)}`)
+    const response = await fetch(SMS_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(smsPayload),
+    })
     const data: SmsResponse = await response.json()
     console.log("[OTP] InforU SMS response:", data)
 

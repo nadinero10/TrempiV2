@@ -23,6 +23,10 @@ export default defineConfig({
         changeOrigin: true,
         secure: true,
         rewrite: (p) => p.replace(/^\/api\/sms/, "/api/SMS"),
+        configure: (proxy) => {
+          proxy.on("error", (err) => { console.log("[proxy] error:", err.message) })
+          proxy.on("proxyRes", (proxyRes, req) => { console.log("[proxy]", req.url, "→", proxyRes.statusCode) })
+        },
       },
     },
   },
