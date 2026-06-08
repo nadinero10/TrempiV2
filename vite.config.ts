@@ -10,4 +10,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/api/otp": {
+        target: "https://capi.inforu.co.il",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/api\/otp/, "/api/Otp"),
+      },
+    },
+  },
 })

@@ -1,8 +1,8 @@
 const INFORU_TOKEN = import.meta.env.VITE_INFORU_TOKEN as string
 const INFORU_USERNAME = import.meta.env.VITE_INFORU_USERNAME as string
 
-const SEND_OTP_URL = "https://capi.inforu.co.il/api/Otp/SendOtp"
-const VERIFY_OTP_URL = "https://capi.inforu.co.il/api/Otp/Authenticate"
+const SEND_OTP_URL = "/api/otp/SendOtp"
+const VERIFY_OTP_URL = "/api/otp/Authenticate"
 
 interface SendOtpPayload {
   UserName: string
