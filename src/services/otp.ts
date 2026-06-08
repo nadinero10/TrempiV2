@@ -25,27 +25,16 @@ function normalizePhone(phone: string): string {
 export async function sendOtp(phone: string): Promise<{ success: boolean; error?: string }> {
   const normalizedPhone = normalizePhone(phone)
 
-  const payload = {
+  const payload = JSON.stringify({
     UserName: INFORU_USERNAME,
     Token: INFORU_TOKEN,
     PhoneNumber: normalizedPhone,
     CodeLength: 4,
     SenderName: "Trempi",
-  }
+  })
 
   try {
-    const response = await fetch(SEND_OTP_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${INFORU_TOKEN}`,
-      },
-      body: JSON.stringify(payload),
-    })
-
-    if (!response.ok) {
-      return { success: false, error: `Server error: ${response.status}` }
-    }
+    const response = await fetch(`${SEND_OTP_URL}?json=${encodeURIComponent(payload)}`)
 
     const data: OtpResponse = await response.json()
 
@@ -53,8 +42,14 @@ export async function sendOtp(phone: string): Promise<{ success: boolean; error?
       return { success: true }
     }
 
-    return { success: false, error: data.StatusDescription || data.Message || "Failed to send OTP" }
-  } catch (err) {
+    const errMsg = data.StatusDescription || data.Message || "Failed to send OTP"
+
+    if (data.StatusId === -403) {
+      return { success: false, error: "OTP service not yet enabled. Contact InforU support." }
+    }
+
+    return { success: false, error: errMsg }
+  } catch {
     return { success: false, error: "Failed to connect to OTP service" }
   }
 }
@@ -62,26 +57,15 @@ export async function sendOtp(phone: string): Promise<{ success: boolean; error?
 export async function verifyOtp(phone: string, code: string): Promise<{ success: boolean; error?: string }> {
   const normalizedPhone = normalizePhone(phone)
 
-  const payload = {
+  const payload = JSON.stringify({
     UserName: INFORU_USERNAME,
     Token: INFORU_TOKEN,
     PhoneNumber: normalizedPhone,
     Code: code,
-  }
+  })
 
   try {
-    const response = await fetch(VERIFY_OTP_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${INFORU_TOKEN}`,
-      },
-      body: JSON.stringify(payload),
-    })
-
-    if (!response.ok) {
-      return { success: false, error: `Server error: ${response.status}` }
-    }
+    const response = await fetch(`${VERIFY_OTP_URL}?json=${encodeURIComponent(payload)}`)
 
     const data: OtpResponse = await response.json()
 

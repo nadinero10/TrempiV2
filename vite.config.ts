@@ -15,7 +15,14 @@ export default defineConfig({
       "/api/otp": {
         target: "https://capi.inforu.co.il",
         changeOrigin: true,
+        secure: true,
         rewrite: (p) => p.replace(/^\/api\/otp/, "/api/Otp"),
+        configure: (proxy) => {
+          proxy.on("proxyReq", (proxyReq) => {
+            proxyReq.removeHeader("origin")
+            proxyReq.removeHeader("referer")
+          })
+        },
       },
     },
   },
