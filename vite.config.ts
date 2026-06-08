@@ -15,18 +15,12 @@ export default defineConfig({
       "/api/otp": {
         target: "https://capi.inforu.co.il",
         changeOrigin: true,
-        secure: true,
         rewrite: (p) => p.replace(/^\/api\/otp/, "/api/Otp"),
       },
       "/api/sms": {
         target: "https://capi.inforu.co.il",
         changeOrigin: true,
-        secure: true,
         rewrite: (p) => p.replace(/^\/api\/sms/, "/api/SMS"),
-        configure: (proxy) => {
-          proxy.on("error", (err) => { console.log("[proxy] error:", err.message) })
-          proxy.on("proxyRes", (proxyRes, req) => { console.log("[proxy]", req.url, "→", proxyRes.statusCode) })
-        },
       },
     },
   },
