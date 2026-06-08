@@ -161,7 +161,26 @@
       "share": "Share Event",
       "copyLink": "Copy Link",
       "copied": "Copied!"
-    }
+    },
+    "stats": {
+      "offers": "Rides Offered",
+      "requests": "Requests",
+      "seats": "Seats Available",
+      "participants": "Participants"
+    },
+    "offerTransport": "Offer a Ride",
+    "requestTransport": "Request a Ride",
+    "tabs": {
+      "offers": "Rides Offered",
+      "requests": "Ride Requests"
+    },
+    "empty": {
+      "offers": "No rides offered yet. Be the first to help!",
+      "requests": "No ride requests yet."
+    },
+    "passengers": "passengers",
+    "notFound": "Event not found",
+    "manage": "Manage Event"
   },
   "transport": {
     "type": {
@@ -240,6 +259,9 @@
       "matches": "Available rides from your area",
       "noMatches": "No matching rides found yet. We'll notify you when one becomes available."
     },
+    "seats": "{{available}} of {{total}} seats",
+    "notes": "Notes",
+    "call": "Call",
     "seatsLeft": "seats left",
     "contactDriver": "Contact Driver",
     "status": {

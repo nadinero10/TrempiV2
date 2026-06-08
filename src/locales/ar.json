@@ -161,7 +161,26 @@
       "share": "مشاركة الحدث",
       "copyLink": "نسخ الرابط",
       "copied": "تم النسخ!"
-    }
+    },
+    "stats": {
+      "offers": "عروض التوصيل",
+      "requests": "الطلبات",
+      "seats": "المقاعد المتاحة",
+      "participants": "المشاركون"
+    },
+    "offerTransport": "عرض توصيلة",
+    "requestTransport": "طلب توصيلة",
+    "tabs": {
+      "offers": "عروض التوصيل",
+      "requests": "طلبات التوصيل"
+    },
+    "empty": {
+      "offers": "لا توجد عروض توصيل بعد. كن أول من يساعد!",
+      "requests": "لا توجد طلبات توصيل بعد."
+    },
+    "passengers": "ركاب",
+    "notFound": "الحدث غير موجود",
+    "manage": "إدارة الحدث"
   },
   "transport": {
     "type": {
@@ -240,6 +259,9 @@
       "matches": "رحلات متاحة من منطقتك",
       "noMatches": "لم يتم العثور على رحلات مطابقة حتى الآن. سنعلمك عندما تتوفر."
     },
+    "seats": "{{available}} من {{total}} مقاعد",
+    "notes": "ملاحظات",
+    "call": "اتصال",
     "seatsLeft": "مقاعد متبقية",
     "contactDriver": "تواصل مع السائق",
     "status": {
